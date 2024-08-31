@@ -1,4 +1,5 @@
-import os,sys,time,os,json,requests
+
+import os,sys,time,os,json,requests,datetime
 import random
 import colorama
 from colorama import Fore,Back,init
@@ -27,28 +28,23 @@ merah="\033[0;91m"
 biru="\033[0;96m"
 
 
-
 def autoketik(s):
     for c in s + "\n":
         sys.stdout.write(c)
         sys.stdout.flush()
         time.sleep(0.05)
 
-
-print(f"""
-
-{putih}[{B}•{putih}] {biru}Developer{hijau}: MarshallSetian
+def banner():
+    print(f"""\n{putih}[{B}•{putih}] {biru}Developer{hijau}: MarshallSetian
 {putih}[{B}•{putih}] {ungu}Instagram {putih}: @marshall_setian
 {W}[{B}•{W}] Ip Kamu {putih}  :{Y} {ip}
-{W}[{B}•{W}] Waktu/Jam {putih}:{merah} {localtime}""")
-
-
-print(f"{putih}=======================================")
-print(f"{G}PROGRAM QUIZ SOAL-JAWAB TINGKAT LANJUT")
-print(f"{W}=======================================")
-print("Bahasa Program : Python")
-print("Fitur: Pilihan ganda, Perhitungan skor, Batas waktu 60 detik")
-print("============================================================")
+{W}[{B}•{W}] Waktu/Jam {putih}:{merah} {localtime}
+{putih}=======================================
+{G}PROGRAM QUIZ SOAL-JAWAB TINGKAT LANJUT
+{W}=======================================
+Bahasa Program : Python
+Fitur: Pilihan ganda, Perhitungan skor, Batas waktu 60 detik
+============================================================""")
 
 
 # Pertanyaan kuis
@@ -236,24 +232,32 @@ def ask_question(question):
 
     if elapsed_time > 60:
         autoketik("Waktu habis! Anda tidak mendapatkan poin.")
+        
+        os.system("clear")
+        return banner()
         return False
 
     if question['choices'][int(answer) - 1].lower() == question['answer'].lower():
         autoketik(f"{G}Jawaban benar!{W}" +"\n"+question['question']+"\n=============>\n"+f"{Y}"""+ question['answer'])
         time.sleep(7)
         os.system("clear")
+        return banner()
         return True
     else:
         autoketik(f"{R}Jawaban salah!{W} Jawaban yang benar adalah{Y} {question['answer']}.")
         time.sleep(5)
         os.system("clear")
+        return banner()
         return False
 
 # Main program
 def run_quiz():
     random.shuffle(questions)
+    banner()
+    
     score = 0
 
+    
     for question in questions:
         if ask_question(question):
             score += 1
@@ -264,3 +268,4 @@ def run_quiz():
 
 if __name__ == "__main__":
     run_quiz()
+
